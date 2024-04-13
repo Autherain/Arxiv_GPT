@@ -1,0 +1,172 @@
+@prefix : <http://www.semanticweb.org/ontologies/2024/2/oai-owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix oai: <http://www.openarchives.org/OAI/2.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/ontologies/2024/2/oai-owl#> .
+
+[ rdf:type owl:Ontology
+ ] .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/date
+dc:date rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/datestamp
+dc:datestamp rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/description
+dc:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/errorDescription
+dc:errorDescription rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/identifier
+dc:identifier rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/subject
+dc:subject rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+dc:title rdf:type owl:AnnotationProperty .
+
+
+###  http://www.openarchives.org/OAI/2.0/completeListSize
+oai:completeListSize rdf:type owl:AnnotationProperty .
+
+
+###  http://www.openarchives.org/OAI/2.0/contains
+oai:contains rdf:type owl:AnnotationProperty .
+
+
+###  http://www.openarchives.org/OAI/2.0/cursor
+oai:cursor rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#contains
+:contains rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#completeListSize
+:completeListSize rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#creator
+:creator rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#cursor
+:cursor rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#date
+:date rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#datestamp
+:datestamp rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#description
+:description rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#errorDescription
+:errorDescription rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#identifier
+:identifier rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#subject
+:subject rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#title
+:title rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#Error
+:Error rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#Record
+:Record rdf:type owl:Class ;
+        rdfs:subClassOf :contains .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#Records
+:Records rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#ResumptionToken
+:ResumptionToken rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#contains
+:contains rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#error
+:error rdf:type owl:NamedIndividual ;
+       dc:errorDescription "" .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#records
+:records rdf:type owl:NamedIndividual ;
+         oai:contains :record .
+
+
+###  http://www.semanticweb.org/ontologies/2024/2/oai-owl#resumptionToken
+:resumptionToken rdf:type owl:NamedIndividual ;
+                 oai:completeListSize "" ;
+                 oai:cursor "" .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+:record dc:creator "" ;
+        dc:date "" ;
+        dc:datestamp "" ;
+        dc:description "" ;
+        dc:identifier "" ;
+        dc:subject "" ;
+        dc:title "" .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi

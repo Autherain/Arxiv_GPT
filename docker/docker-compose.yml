@@ -1,0 +1,124 @@
+services:
+
+  retriever:
+    image: python:3.11-slim
+    container_name: pfr-retriever
+    working_dir: /opt/app
+    depends_on:
+      - redis
+    volumes:
+      - ../logs:/opt/logs
+      - ../pfr:/opt/app
+      - ../pfr/config/.env.retriever.docker:/opt/app/config/.env.retriever:ro
+    command: [ "/bin/sh", "./start_app.sh", "retriever" ]
+
+  updater:
+    image: python:3.11-slim
+    container_name: pfr-updater
+    working_dir: /opt/app
+    depends_on:
+      - redis
+      - graphdb
+    volumes:
+      - ../logs:/opt/logs
+      - ../pfr:/opt/app
+      - ../pfr/config/.env.updater.docker:/opt/app/config/.env.updater:ro
+    command: [ "/bin/sh", "./start_app.sh", "updater" ]
+
+  asker:
+    image: python:3.11-slim
+    container_name: pfr-asker
+    working_dir: /opt/app
+    depends_on:
+      - graphdb
+      - redis
+    volumes:
+      - ../logs:/opt/logs
+      - ../pfr:/opt/app
+      - ../pfr/config/.env.asker.docker:/opt/app/config/.env.asker:ro
+    command: [ "/bin/sh", "./start_app.sh", "asker" ]
+
+  api:
+    image: python:3.11-slim
+    container_name: pfr-api
+    working_dir: /opt/app
+    ports:
+      - "8012:8000"
+    depends_on:
+      - redis
+    volumes:
+      - ../logs:/opt/logs
+      - ../pfr:/opt/app
+      - ../pfr/config/.env.api.docker:/opt/app/config/.env.api:ro
+    command: ["/bin/sh", "./start_app.sh", "api"]
+
+  redis:
+    container_name: pfr-redis
+    image: redis/redis-stack
+    restart: always
+    ports:
+      - "6379:6379"
+      - "8011:8001"
+    volumes:
+      - ./redis/redis.conf:/redis-stack.conf:ro
+
+  kong:
+    image: kong:latest
+    container_name: pfr-kong
+    restart: unless-stopped
+    depends_on:
+      - api
+    volumes:
+      - ./kong/:/kong/declarative/
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://kong:8000"]
+      interval: 5s
+      timeout: 2s
+      retries: 15
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_PROXY_LISTEN=${KONG_PROXY_LISTEN:-0.0.0.0:8000}
+      - KONG_ADMIN_LISTEN=${KONG_ADMIN_LISTEN:-0.0.0.0:8001}
+      - KONG_ADMIN_GUI_LISTEN=${KONG_ADMIN_GUI_LISTEN:-0.0.0.0:8002}
+    ports:
+      - "127.0.0.1:8001:8001/tcp"
+      - "127.0.0.1:8000:8000/tcp" #The port to make query on 
+      - "127.0.0.1:8444:8444/tcp"
+      - "127.0.0.1:8002:8002/tcp"
+
+  graphdb:
+    container_name: pfr-graphdb
+    image: ontotext/graphdb:10.6.0
+    restart: always
+    ports:
+      - "7200:7200"
+      - "7300:7300"
+    volumes:
+      - ./graphdb:/opt/graphdb/home
+
+  neo4j:
+    container_name: pfr-neo4j
+    restart: always
+    image: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_AUTH=none
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+    volumes:
+      - ./neo4j/data:/data
+      - neo4j_plugins:/plugins
+
+volumes:
+  neo4j_plugins:

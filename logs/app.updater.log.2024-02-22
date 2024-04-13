@@ -1,0 +1,38 @@
+2024-02-22 14:24:11,440 - INFO - updater.boot - === Start Updater ===
+2024-02-22 14:24:11,443 - ERROR - shared.repositories.update_queues - Failed to push an update article task : __init__() takes 1 positional argument but 2 were given.
+Traceback (most recent call last):
+  File "/opt/app/shared/repositories/update_queues.py", line 75, in pop_task_update_article
+    result = Article(result)
+TypeError: __init__() takes 1 positional argument but 2 were given
+2024-02-22 14:25:36,427 - INFO - updater.boot - === Start Updater ===
+2024-02-22 14:25:36,430 - ERROR - shared.repositories.update_queues - Failed to push an update article task : 1 validation error for Article
+_id
+  Field required [type=missing, input_value={'id': 'oai:arXiv.org:080...les are problematic.\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.6/v/missing.
+Traceback (most recent call last):
+  File "/opt/app/shared/repositories/update_queues.py", line 75, in pop_task_update_article
+    result = Article(**result)
+  File "/usr/local/lib/python3.9/site-packages/pydantic/main.py", line 171, in __init__
+    self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Article
+_id
+  Field required [type=missing, input_value={'id': 'oai:arXiv.org:080...les are problematic.\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.6/v/missing
+2024-02-22 14:32:02,176 - INFO - updater.boot - === Start Updater ===
+2024-02-22 14:34:46,705 - INFO - updater.boot - === Start Updater ===
+2024-02-22 14:35:01,726 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:01,727 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:01,728 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:01,729 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:01,730 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:31,760 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:31,761 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:31,762 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:31,763 - INFO - updater.boot - -> popped article.
+2024-02-22 14:35:31,765 - INFO - updater.boot - -> popped article.
+2024-02-22 14:58:27,576 - INFO - updater.boot - === Start Updater ===
+2024-02-22 14:58:27,579 - INFO - updater.boot - -> popped article.
+2024-02-22 14:58:27,579 - INFO - updater.boot - -> popped article.
+2024-02-22 14:58:27,580 - INFO - updater.boot - -> popped article.
+2024-02-22 14:58:27,580 - INFO - updater.boot - -> popped article.
+2024-02-22 14:58:27,580 - INFO - updater.boot - -> popped article.

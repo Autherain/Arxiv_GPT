@@ -1,0 +1,41 @@
+_format_version: "1.1"
+services:
+  - name: pfr-api
+    url: http://api:8000
+    routes:
+      - name: post_question
+        paths:
+          - /ask/
+        methods:
+          - POST
+        strip_path: false
+      - name: get_response
+        paths:
+          - /ask/(?<token>.+)
+        methods:
+            - GET
+        strip_path: false
+      # Has to be used with openapi_json
+      - name: docs
+        paths:
+          - /docs
+        methods:
+          - GET
+        strip_path: false
+      # Has to be used with docs to work 
+      - name: openapi_json
+        paths:
+          - /openapi.json
+        methods:
+          - GET
+        strip_path: false
+#     plugins:
+#       - name: key-auth
+#         config:
+#           key_names:
+#             - apikey
+# consumers:
+#   - username: the_courier
+#     custom_id: vault_21
+#     keyauth_credentials:
+#       - key: ffb62f46-becf-4af4-8704-0bfb584dbd3c
